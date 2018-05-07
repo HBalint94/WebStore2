@@ -1,0 +1,70 @@
+﻿<Window x:Class="WebShop.Admin.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WebShop.Admin"
+        mc:Ignorable="d"
+         Title="WebShop - Termékek/Rendelések kezelése" Height="400" Width="650" MinHeight="450" MinWidth="650">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="150" />
+            <RowDefinition Height="35" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem Header="Menü">
+                <MenuItem Header="Termékek lekérdezése" Command="{Binding LoadCommand}"/>
+                <MenuItem Header="Rendelések lekérdezése" Command="{Binding LoadRentsCommand}"/>
+                <MenuItem Header="Termékek mentése" Command="{Binding SaveCommand}" IsEnabled="{Binding IsLoaded}"/>
+                <Separator />
+                <MenuItem Header="Kilépés" Command="{Binding ExitCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <DataGrid Name="productGrid" Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}">
+            <!-- adatrács, amelynek megadjuk az oszlopait -->
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="Azonosító" Binding="{Binding ModellNumber}" />
+                <DataGridTextColumn Header="Gyártó" Binding="{Binding Producer}" />
+                <DataGridTextColumn Header="Kategória" Binding="{Binding CategoryId}" />
+                <DataGridTextColumn Header="Ár" Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Raktárkészlet" Binding="{Binding Inventory}" />
+                <DataGridTextColumn Header="Elérhető" Binding="{Binding Available}" />
+                <DataGridTextColumn Header="Leírás" Binding="{Binding Description}" />
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Content="Új termék hozzáadása" Margin="6,5,0,5" Command="{Binding CreateProductCommand}" Width="114" IsEnabled="{Binding IsLoaded}" />
+            <Button Content="Kijelölt termék módosítása" Margin="6,5,0,5" Command="{Binding UpdateProductCommand}" CommandParameter="{Binding SelectedProduct}" Width="114" IsEnabled="{Binding IsLoaded}" />
+            <Button Content="Kijelölt termék törlése" Margin="6,5,6,5" Command="{Binding DeleteProductCommand}" CommandParameter="{Binding SelectedProduct}" Width="114" IsEnabled="{Binding IsLoaded}" />
+        </StackPanel>
+
+
+        <DataGrid Name="rentGrid" Grid.Row="3" Grid.ColumnSpan="2" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Rents}" SelectedItem="{Binding SelectedRent}">
+            <!-- adatrács, amelynek megadjuk az oszlopait -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Név" Binding="{Binding UserName}" />
+                <DataGridTextColumn Header="Cím" Binding="{Binding Address}" />
+                <DataGridTextColumn Header="Telefonszám" Binding="{Binding PhoneNumber}" />
+                <DataGridTextColumn Header="E-mail" Binding="{Binding Email}" />
+                <DataGridTextColumn Header="Végösszeg" Binding="{Binding TotalPrice}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <Button Content="Rendelés véglegesítése" Margin="6,5,6,5" Command="{Binding FinalizeRentCommand}" CommandParameter="{Binding SelectedRent}" Width="114" IsEnabled="{Binding IsLoaded}" />
+        </StackPanel>
+
+
+    </Grid>
+</Window>
