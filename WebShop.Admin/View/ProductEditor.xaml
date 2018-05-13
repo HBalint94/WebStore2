@@ -24,15 +24,19 @@
             <TextBlock Text="Leírás:" Margin="5" />
             <TextBox Width="150" Text="{Binding EditedProduct.Description}" IsEnabled="{Binding EditedProduct.Available}" Margin="5"/>
             <TextBlock Text="Kategória:" Margin="5" />
-            <ComboBox Width="157" ItemsSource="{Binding Categories}" SelectedItem="{Binding EditedProduct.CategoryId}" IsEnabled="{Binding EditedProduct.Available}" Margin="5" />
+            <TextBox Width="157" Text="{Binding EditedProduct.CategoryId}" IsEnabled="{Binding EditedProduct.Available}" Margin="5" />
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <TextBlock Text="Raktárkészlet:" Margin="5" />
             <TextBox Width="150" Text="{Binding EditedProduct.Inventory}" IsEnabled="{Binding EditedProduct.Available}" Margin="5"/>
             <TextBlock Text="Ár:" Margin="5" />
-            <ComboBox Width="157" Text="{Binding EditedProduct.Price}" IsEnabled="{Binding EditedProduct.Available}" Margin="5" />
+            <TextBox Width="157" Text="{Binding EditedProduct.Price}" IsEnabled="{Binding EditedProduct.Available}" Margin="5" />
         </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Text="Gyártó:" Margin="5" />
+            <TextBox Width="150" Text="{Binding EditedProduct.Producer}" IsEnabled="{Binding EditedProduct.Available}" Margin="5"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Grid.ColumnSpan="2">
             <TextBlock Text="Elérhető:" Margin="5" />
             <CheckBox HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="4" Margin="0,0,10,5" IsChecked="{Binding EditedProduct.Available}"></CheckBox>
         </StackPanel>

@@ -42,7 +42,7 @@ namespace WebShop.Service.Controllers
             {
                 List<Customer> customers = _signInManager.UserManager.Users.ToList();
 
-                return Ok(_context.Rents.Include(p => !p.Performed).ToList().Select(rent => new RentDTO
+                return Ok(_context.Rents.Where(p => !p.Performed).ToList().Select(rent => new RentDTO
                 {
                     Id = rent.Id,
                     UserName = SelectCustomer(customers, rent.CustomerId).UserName,
@@ -53,7 +53,7 @@ namespace WebShop.Service.Controllers
                     Performed = rent.Performed
                 }));
             }
-            catch
+            catch(Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

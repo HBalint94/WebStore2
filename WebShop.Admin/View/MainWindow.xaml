@@ -21,8 +21,7 @@
 
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
             <MenuItem Header="Menü">
-                <MenuItem Header="Termékek lekérdezése" Command="{Binding LoadCommand}"/>
-                <MenuItem Header="Rendelések lekérdezése" Command="{Binding LoadRentsCommand}"/>
+                <MenuItem Header="Adatok lekérdezése" Command="{Binding LoadCommand}"/>
                 <MenuItem Header="Termékek mentése" Command="{Binding SaveCommand}" IsEnabled="{Binding IsLoaded}"/>
                 <Separator />
                 <MenuItem Header="Kilépés" Command="{Binding ExitCommand}" />

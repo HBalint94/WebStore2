@@ -246,7 +246,9 @@ namespace WebShop.Admin.ViewModel
                 Price = product.Price,
                 Inventory = product.Inventory,
                 ModellNumber = product.ModellNumber,
-                Available = product.Available
+                Available = product.Available,
+                Producer = product.Producer,
+                CategoryId = product.CategoryId
             }; // a szerkesztett épület adatait áttöltjük a kijelöltből
 
             OnProductEditingStarted();
@@ -326,6 +328,7 @@ namespace WebShop.Admin.ViewModel
                 await _model.LoadAsync();
                 Products = new ObservableCollection<ProductDTO>(_model.Products); // az adatokat egy követett gyűjteménybe helyezzük
                 Categories = new ObservableCollection<CategoryDTO>(_model.Categories);
+                Rents = new ObservableCollection<RentDTO>(_model.Rents);
                 IsLoaded = true;
             }
             catch (PersistenceUnavailableException)

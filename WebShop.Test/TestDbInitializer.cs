@@ -1,126 +1,43 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
+using WebStore.Models;
 
-namespace WebStore.Models
+namespace WebShop.Test
 {
-    public static class DbInitializer
+    public static class TestDbInitializer
     {
-        private static WebStoreContext context;
-        private static UserManager<Customer> _userManager;
-        private static RoleManager<IdentityRole<int>> _roleManager;
-
-        public static void Initialize(WebStoreContext _context,UserManager<Customer> userManager ,
-            RoleManager<IdentityRole<int>> roleManager)
+        public static void Initialize(WebStoreContext context)
         {
-            context = _context;
-            _userManager = userManager;
-            _roleManager = roleManager;
-
-            context.Database.EnsureCreated();
-            
-
-            if (context.Categories.Any())
-            {
-                return; // Az adatbázist már inicializáltnak vesszük, ha létezik kategoria
-            }
-
-            SeedCategories();
-            SeedProducts();
-            SeedUsers();
-            SeedRents();
-            SeedRentProductConnections();
-
-
-        }
-        private static void SeedUsers()
-        {
-            var adminUser = new Customer
-            {
-                UserName = "admin",
-                Name = "Adminisztrátor",
-                Email = "admin@example.com",
-                PhoneNumber = "+36123456789",
-                Address = "Nevesincs utca 1."
-            };
-            var adminPassword = "Almafa123";
-            var adminRole = new IdentityRole<int>("administrator");
-
-            var result1 = _userManager.CreateAsync(adminUser, adminPassword).Result;
-            var result2 = _roleManager.CreateAsync(adminRole).Result;
-            var result3 = _userManager.AddToRoleAsync(adminUser, adminRole.Name).Result;
-
-            var customer1 = new Customer
-            {
-                UserName = "Balint",
-                Name = "Balint",
-                Email = "balint@mailbox.hu",
-                PhoneNumber = "+36207123232",
-                Address = "Albert utca 2"
-            };
-            var customer1Password = "Almafa123";
-            var customer1Role = new IdentityRole<int>("customer");
-
-            var customerResult1 = _userManager.CreateAsync(customer1, customer1Password).Result;
-            var customerResult2 = _roleManager.CreateAsync(customer1Role).Result;
-            var customerResult3 = _userManager.AddToRoleAsync(customer1, customer1Role.Name).Result;
-
-            var customer2 = new Customer
-            {
-                UserName = "Pisti",
-                Name = "Pisti",
-                Email = "pisti@mailbox.hu",
-                PhoneNumber = "+36201234354",
-                Address = "Petőfi utca 2"
-            };
-            var customer2Password = "Almafa123";
-            var customer2Role = new IdentityRole<int>("customer");
-
-            var customer2Result1 = _userManager.CreateAsync(customer2, customer2Password).Result;
-            var customer2Result2 = _roleManager.CreateAsync(customer2Role).Result;
-            var customer2Result3 = _userManager.AddToRoleAsync(customer2, customer2Role.Name).Result;
-        }
-      
-        private static void SeedRents()
-        {
+          
             var rents = new Rent[]
             {
                 new Rent
                 {
-                    
-                    CustomerId = 2,
+
+                    CustomerId = 1,
                     TotalPrice = 50000,
                     Performed = false
                 },
                 new Rent
                 {
-                    CustomerId = 3,
+                    CustomerId = 1,
                     TotalPrice = 100000,
-                    Performed = false
-                },
-                new Rent
-                {
-                    CustomerId = 2,
-                    TotalPrice = 10000,
                     Performed = false
                 }
                 
+
             };
             foreach (Rent r in rents)
             {
                 context.Rents.Add(r);
             }
             context.SaveChanges();
-        }
-        private static void SeedRentProductConnections()
-        {
+
+
             var rentProductConnections = new RentProductConnection[]
-            {
+          {
                 new RentProductConnection
                 {
                     ProductModellNumber = 125,
@@ -131,7 +48,7 @@ namespace WebStore.Models
                 {
                     ProductModellNumber = 126,
                     CountProduct = 2,
-                    RentId = 3
+                    RentId = 1
                 },
                 new RentProductConnection
                 {
@@ -139,18 +56,15 @@ namespace WebStore.Models
                     CountProduct = 5,
                     RentId = 1
                 }
-            };
+          };
             foreach (RentProductConnection rp in rentProductConnections)
             {
                 context.RentProductConnections.Add(rp);
             }
             context.SaveChanges();
-        }
 
-        private static void SeedCategories()
-        {
             var categories = new Category[]
-            {
+           {
                 new Category {Name = "Telefon"},
                 new Category {Name = "Mosógép"},
                 new Category {Name = "Laptop"},
@@ -158,18 +72,16 @@ namespace WebStore.Models
                 new Category {Name = "TV"},
                 new Category {Name = "Porszívó"},
                 new Category {Name = "Kábelek"}
-            };
+           };
             foreach (Category c in categories)
             {
                 context.Categories.Add(c);
             }
             context.SaveChanges();
-        }
 
-        private static void SeedProducts()
-        {
+
             var products = new Product[]
-            {
+           {
                 new Product
                 {
                     Producer = "Apple",
@@ -401,15 +313,16 @@ Available = true,
                     Available = true,
                 }
 
-            };
-            foreach(Product p in products)
+           };
+            foreach (Product p in products)
             {
                 context.Products.Add(p);
             }
 
             context.SaveChanges();
-        }        
-       
+
+        }
+
 
     }
 }

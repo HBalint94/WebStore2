@@ -60,11 +60,11 @@ namespace WebShop.Service.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetProductForCategory(int id)
+        public IActionResult GetProductForCategory([FromRoute]int categoryId)
         {
             try
             {
-                return Ok(_context.Products.Include(b => b.Available).Where(b => b.CategoryId == id).ToList().Select(product => new ProductDTO
+                return Ok(_context.Products.Include(b => b.Available).Where(b => b.CategoryId == categoryId).ToList().Select(product => new ProductDTO
                 {
                     Id = product.Id,
                     ModellNumber = product.ModellNumber,
@@ -88,7 +88,7 @@ namespace WebShop.Service.Controllers
         /// </summary>
         /// <param name="productDTO">Termék.</param>
         [HttpPost]
-        [Authorize(Roles = "administrator")]
+       // [Authorize(Roles = "administrator")]
         public IActionResult PostProduct([FromBody] ProductDTO productDTO)
         {
             try

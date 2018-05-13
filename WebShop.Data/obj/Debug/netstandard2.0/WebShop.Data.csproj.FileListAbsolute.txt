@@ -1,9 +1,0 @@
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\bin\Debug\netstandard2.0\WebShop.Data.deps.json
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\bin\Debug\netstandard2.0\WebShop.Data.dll
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\bin\Debug\netstandard2.0\WebShop.Data.pdb
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\obj\Debug\netstandard2.0\WebShop.Data.csprojResolveAssemblyReference.cache
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\obj\Debug\netstandard2.0\WebShop.Data.csproj.CoreCompileInputs.cache
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\obj\Debug\netstandard2.0\WebShop.Data.AssemblyInfoInputs.cache
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\obj\Debug\netstandard2.0\WebShop.Data.AssemblyInfo.cs
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\obj\Debug\netstandard2.0\WebShop.Data.dll
-C:\Users\Balint\Desktop\WebShop\WebShop\WebShop.Data\obj\Debug\netstandard2.0\WebShop.Data.pdb

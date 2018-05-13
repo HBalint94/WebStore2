@@ -141,7 +141,9 @@ namespace WebShop.Admin.Model
                 throw new ArgumentException("The product does not exist.", nameof(rentDTO));
             }
 
-            rentToModify.Performed = rentDTO.Performed;
+            rentToModify.Performed = true;
+
+            _persistence.DoneRentAsync(rentToModify);
 
             // jelezzük a változást
             OnRentChanged(rentDTO.Id);
@@ -180,7 +182,7 @@ namespace WebShop.Admin.Model
             // adatok
             _products = (await _persistence.ReadProductsAsync()).ToList();
             _categories = (await _persistence.ReadCategoriesAsync()).ToList();
-            //_rents = (await _persistence.ReadRentsAsync()).ToList();
+            _rents = (await _persistence.ReadRentsAsync()).ToList();
 
             // állapotjelzések
             _productFlags = new Dictionary<ProductDTO, DataFlag>();
