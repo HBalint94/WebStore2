@@ -1,0 +1,35 @@
+﻿@using WebStore.Models;
+
+@model IList<Product>
+@* csak a törzset adjuk meg*@
+
+@if (Model == null || !Model.Any())
+{
+    <div class="contentText">Az oldal karbantartás alatt áll, kérem látogasson vissza később</div>
+}
+else{
+    <h1>Egy-egy termék a különböző kategoriákból:</h1><br/>
+
+<table>
+        @* egy sorba 2 kategoria*@
+        @for (int i = 0; i < (Model.Count+1)/2;i++)
+        {
+             <tr>
+                 @for(int j=i * 2;j<i*2+2 && j < Model.Count; j++)
+                 {
+                     <td>
+                         <div>
+                             <strong>Termék neve:</strong>@Model[j].Description<br/>
+                             <strong>Termék ára:</strong>@Model[j].Price<br/>
+                         </div>
+                         <div>
+                             <a asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productModellNumber="@Model[j].ModellNumber">Ez kell</a>
+                         </div>
+                     </td>
+                 }
+             </tr>
+        }
+    </table>
+
+
+}

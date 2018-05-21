@@ -1,0 +1,58 @@
+﻿@using System;
+@using System.Globalization;
+@using WebStore.Models;
+
+@model IList<Product>
+
+@if (Model.Count == 0)
+{
+    <div class="contentText">Jelenleg nincs elérhető termék ebben a kategóriában, kérem látogasson vissza később!</div>
+}
+else
+{
+    <h3>Rendezés:</h3> 
+    <div>
+        <a asp-controller="Home" asp-action="GetAscendingOrderedProductsByPrice" asp-route-categoryId="@Model[0].CategoryId">Ár szerint(növekvő)</a>
+        <a asp-controller="Home" asp-action="GetDescendingOrderedProductsByPrice" asp-route-categoryId="@Model[0].CategoryId">Ár szerint(csökkenő)</a>
+    </div>
+    <table>
+        @*hármasával sorolom fel a termékeket*@
+        @for (int i = 0; i < (Model.Count + 2) / 3; i++)
+        {
+            <tr>
+                @for (int j = i * 3; j < i * 3 + 3 && j < 20 && j < Model.Count; j++)
+                {
+                    <td>
+                        <table border="0" width="300">
+                            <tr>
+                                <td>
+                                    <strong>Gyártó: </strong>@Model[j].Producer<br />
+                                    <strong>Modell szám: </strong>@Model[j].ModellNumber.ToString()<br />
+                                    <strong>Termék leírása: </strong>@Model[j].Description<br />
+                                    <strong>Ára: </strong>@Model[j].Price.ToString() Ft<br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productModellNumber="@Model[j].ModellNumber">Kosárba</a>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+
+    @if (Model.Count > 20)
+    {
+        <div>
+            <a asp-controller="Home" asp-action="PageUp" asp-route-categoryId="@Model[0].CategoryId">>>Lapozas>></a>
+        </div>
+
+    }
+
+
+}

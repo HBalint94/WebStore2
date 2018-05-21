@@ -1,0 +1,102 @@
+﻿@using WebStore.Models;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Webshop</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+    </environment>
+</head>
+<body>
+    <div class="header">
+        <div class="headerText">
+            <h1>
+                <a asp-controller="Home" asp-action="Index">WebShop</a>
+            </h1>
+            <h3>
+                Bálint Webshop. Az oldalon jelenleg @ViewBag.UserCount regisztrált felhasználó böngészik.
+            </h3>
+        </div>
+    </div>
+    <div class="headerAdmin">
+        @if (ViewBag.CurrentCustomerName == null)
+    {
+        <table>
+            <tr>
+                <td>
+                    <a asp-controller="Account" asp-action="Login">Bejelentkezés</a>
+                </td>
+                <td>
+                    <a asp-controller="Account" asp-action="Register">Regisztráció</a>
+                </td>
+            </tr>
+        </table>
+}
+else
+{
+    <table>
+        <tr>
+            <td colspan="2">
+                Üdvözöljük, @ViewBag.CurrentCustomerName!
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a asp-controller="Account" asp-action="Logout">Kijelentkezés</a>
+            </td>
+            <td>
+                <a asp-controller="ShoppingCart" asp-action="Index">Kosár</a>
+            </td>
+        </tr>
+        <tr></tr>
+    </table>
+}
+    </div>
+    <div class="content">
+        <div class="leftColumn">
+            <h3>Keresés kategoriák szerint</h3>
+            @* amennyiben nincsenek megadva kategoriák *@
+            @if (ViewBag.Categories == null || ViewBag.Categories.Length == 0)
+            {
+                <span>Nincs termékünk jelenleg, kérem látogasson vissza később.</span>
+            }
+            else
+            {
+                <ul>
+                    @* felsoroljuk a kategoriákat *@
+                    @foreach (Category category in ViewBag.Categories)
+                    {
+                        <li>
+                            @* létrehozunk egy linket minden kategoriára az Index akcióra az azonosító paraméterrel *@
+                            <a asp-controller="Home" asp-action="Products" asp-route-categoryId="@category.Id">@category.Name</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+        <div class="rightColumn">
+            @RenderBody()
+            @* betöltjük a tényleges oldal törzsét *@
+            <footer>
+                <p>&copy; 2018 - WebShop</p>
+            </footer>
+        </div>
+    </div>
+    
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

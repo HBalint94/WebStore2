@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -12,15 +11,10 @@ namespace WebStore.Models
     public static class DbInitializer
     {
         private static WebStoreContext context;
-        private static UserManager<Customer> _userManager;
-        private static RoleManager<IdentityRole<int>> _roleManager;
-
-        public static void Initialize(WebStoreContext _context,UserManager<Customer> userManager ,
-            RoleManager<IdentityRole<int>> roleManager)
+        public static void Initialize(IApplicationBuilder app)
         {
-            context = _context;
-            _userManager = userManager;
-            _roleManager = roleManager;
+
+            context = app.ApplicationServices.GetRequiredService<WebStoreContext>();
 
             context.Database.EnsureCreated();
             
@@ -32,32 +26,8 @@ namespace WebStore.Models
 
             SeedCategories();
             SeedProducts();
-            SeedUsers();
-       
-
-
+        
         }
-        private static void SeedUsers()
-        {
-            var adminUser = new Customer
-            {
-                UserName = "admin",
-                Name = "Adminisztrátor",
-                Email = "admin@example.com",
-                PhoneNumber = "+36123456789",
-                Address = "Nevesincs utca 1."
-            };
-            var adminPassword = "Almafa123";
-            var adminRole = new IdentityRole<int>("administrator");
-
-            var result1 = _userManager.CreateAsync(adminUser, adminPassword).Result;
-            var result2 = _roleManager.CreateAsync(adminRole).Result;
-            var result3 = _userManager.AddToRoleAsync(adminUser, adminRole.Name).Result;
-
-           
-        }
-      
-       
 
         private static void SeedCategories()
         {
@@ -320,8 +290,9 @@ Available = true,
             }
 
             context.SaveChanges();
-        }        
-       
+        }
+        
+        
 
     }
 }

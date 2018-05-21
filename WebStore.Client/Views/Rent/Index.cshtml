@@ -1,0 +1,124 @@
+﻿@using WebStore.Models;
+
+@model RentViewModel
+
+
+<div class="contentHead">@Model.CustomerName rendelése</div>
+<div class="contentBody">
+    <table>
+        <tr>
+            <td colspan="2" valign="middle">
+                <div class="contentHead">
+                    Kosár adatok:
+                </div>
+            </td>
+        </tr>
+        @for (int i = 0; i < Model.ShoppingCartItems.Count; i++)
+        {
+            <tr>
+
+                <td>
+                    <strong>ModellSzám: </strong>@Model.ShoppingCartItems[i].ProductModellNumber<br />
+                    <strong>Mennyiség:  </strong>@Model.ShoppingCartItems[i].Quantity<br />
+                    <strong>Leírás: </strong>@Model.ShoppingCartItems[i].ProductDescription<br />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-productModellNumber="@Model.ShoppingCartItems[i].ProductModellNumber">Kivesz</a>
+                </td>
+            </tr>
+
+
+
+
+        }
+        <tr>
+            <td>
+                <strong>Teljes ár: </strong>@Model.TotalPrice Ft<br />
+            </td>
+        </tr>
+        <tr>
+    </table>
+    <form asp-controller="Rent" asp-action="IndexAsync">
+        @* Automatikus védelem XSRF támadás ellen *@
+        <table>
+            <tr>
+                <td colspan="2" valign="middle">
+                    @* globális modellhibák megjelenítése *@
+                    <div asp-validation-summary="ModelOnly" class="failureNotification"></div>
+
+                    <div class="contentHead">
+                        Személyes adatok:
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="120">
+                    Név:
+                </td>
+                <td class="failureNotification">
+                    <input asp-for="CustomerName" size="40" />
+                    @* szövegbeviteli mezőt generálunk, amelynek megadjuk a méretét is *@
+                    <span asp-validation-for="CustomerName"></span>
+                    @* hibaüzenet megjelenítése *@
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Számlázási cím:
+                </td>
+                <td class="failureNotification">
+                    <input asp-for="CustomerAddress" size="40" />
+                    <span asp-validation-for="CustomerAddress"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    E-mail cím:
+                </td>
+                <td class="failureNotification">
+                    <input asp-for="CustomerEmail" size="40" />
+                    @* a szerkesztőelemet a modell szabja meg, de így befolyásolhatjuka méretét *@
+                    <span asp-validation-for="CustomerEmail"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Telefonszám:
+                </td>
+                <td class="failureNotification">
+                    <input asp-for="CustomerPhoneNumber" size="40" />
+                    <span asp-validation-for="CustomerPhoneNumber"></span>
+                </td>
+            </tr>
+            @for (int i = 0; i < Model.ShoppingCartItems.Count; i++)
+            {
+            <tr>
+                <td>
+                    @Html.HiddenFor(it => Model.ShoppingCartItems[i].ProductModellNumber)
+                </td>
+                <td>
+                    @Html.HiddenFor(it => Model.ShoppingCartItems[i].Quantity)
+                </td>
+            </tr>
+            }
+           
+       
+        <tr>
+            <td colspan="2" align="right">
+                <input type="submit" value="Rendelés" class="button" />
+            </td>
+        </tr>
+
+
+        </table>
+    </form>
+
+</div>
+
+@section Scripts
+    {
+    @* jQuery Validation használata a kliens oldali validációra *@
+    @{ Html.RenderPartial("_ValidationScriptsPartial"); }
+}
