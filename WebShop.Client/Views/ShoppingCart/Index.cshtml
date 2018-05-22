@@ -1,0 +1,46 @@
+﻿@using WebShop.Client.Models;
+@model ShoppingCartViewModel
+
+<div class="row checkoutForm">
+    <h2>Your shopping cart</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Termék azonosító</th>
+                <th>Termék leírása</th>
+                <th class="text-right">Mennyiség</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.ShoppingCartItems)
+            {
+            <tr>
+                <td class="text-center">@line.ProductModellNumber</td>
+                <td class="text-left">@line.ProductDescription</td>
+                <td class="text-left">@line.Quantity</td>
+                <td class="text-center"><a asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-productModellNumber="@line.ProductModellNumber">Kivesz</a></td>
+                <td class="text-center"><a asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productModellNumber="@line.ProductModellNumber">Hozzáad</a></td>
+            </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Total:</td>
+                <td class="text-right">
+                    @Model.ShoppingCartTotal.ToString("c")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a asp-controller="ShoppingCart" asp-action="RemoveAllFromShoppingCart">Kosár kiürítése</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a asp-controller="Rent" asp-action="IndexAsync">Rendelés</a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
